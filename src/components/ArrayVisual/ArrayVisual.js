@@ -1,6 +1,7 @@
 import React from 'react';
 import './ArrayVisual.css';
 import {bubbleSortAnimated} from '../BubbleSort/BubbleSort';
+import {insertionSortAnimated} from '../InsertionSort/InsertionSort';
 import Slider from '@material-ui/core/Slider';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
@@ -23,28 +24,91 @@ class ArrayVisual extends React.Component {
 			speed: 600,
 			stop: false,
 			algorithm: 'bubble',
+			buttonDisable: 'enabled'
 		}
 	}
 
 	sortStart = () => {
 		this.setState({stop: false})
+		this.setState({buttonDisable: 'disable'})
 
 		if(this.state.algorithm === 'bubble') {
 			this.bubbleSort(this.state.array,0, 0, 0)
-		} else {
-			console.log('not yet')
+		} else if(this.state.algorithm === 'insertion') {
+			this.insertionSort(this.state.array,0,0,0)
 		}
+	}
+
+	insertionSort(array, index, b1HTML, b2HTML) {
+		setTimeout(() => {
+			const [animations] = insertionSortAnimated(array);
+			var frameEnd = animations.length;
+			if(index === frameEnd) {
+				return
+			}
+			var swap = false;
+			var action = animations[index][0];
+
+		    if(this.state.stop === true) {
+	        	console.log('stopped')
+	        	return;
+	        }
+
+	        if(action === 'target') {
+	        	var target = document.getElementsByClassName('bar')[animations[index][1]];
+	        	target.style.backgroundColor = 'orange';
+	        	b1HTML = animations[index][1];
+	        	this.setState({swapMessage: `Target ${target.innerText}`})
+        		this.setState({messageColor: 'orange'})
+	        }else if(action === 'swap') {
+	        	target = document.getElementsByClassName('bar')[animations[index][2]+1];
+	        	var check = document.getElementsByClassName('bar')[animations[index][2]];
+	        	console.log(check)
+	        	target.style.backgroundColor = 'purple';
+	        	check.style.backgroundColor = 'purple';
+	        	b2HTML = animations[index][2];  	
+	        	swap = true;
+	        	this.setState({swapMessage: `Target ${target.innerText} less than ${check.innerText}`})
+        		this.setState({messageColor: 'purple'})
+	        } else if(action === 'sorted') {
+        		this.setState({swapMessage: 'Sorted!'})
+        		this.setState({messageColor: 'green'})
+        		this.setState({buttonDisable: 'enabled'})
+        		return;
+        	}
+
+	        setTimeout(() => {
+				if(target) {
+			        target.style.backgroundColor = '#357edd';
+				}
+				if(check)
+					check.style.backgroundColor = '#357edd';
+
+			    if(swap) {
+			        const self = this
+			        const newArray = self.state.array.slice()
+			        var temp = newArray[b1HTML];
+			        newArray[b1HTML] = newArray[b2HTML]
+			        newArray[b2HTML] = temp   
+			        	
+			        self.setState({array: newArray})
+			    }
+			}, this.state.speed)
+
+	        this.insertionSort(array,++index,b1HTML,b2HTML)
+		}, this.state.speed);
+
 	}
 
 	bubbleSort(array, index, b1HTML, b2HTML) {
 		setTimeout(() => {
-		const [animations] = bubbleSortAnimated(array);
-		var frameEnd = animations.length;
-		if(index === frameEnd) {
-			return
-		}
-		var swap = false;
-		
+			const [animations] = bubbleSortAnimated(array);
+			var frameEnd = animations.length;
+			if(index === frameEnd) {
+				return
+			}
+
+			var swap = false;
         	var action = animations[index][0];
 	        var bar1 = document.getElementsByClassName('bar')[animations[index][1]];
 	        var bar2 = document.getElementsByClassName('bar')[animations[index][1] + 1];
@@ -64,40 +128,38 @@ class ArrayVisual extends React.Component {
         		}
 	        	b1HTML = animations[index][1];
 	        	b2HTML = animations[index][2];
-	     
-
         	}else if(action === 'swap'){
         		swap = true;
         		if(bar1 && bar2) {
-					bar1.style.backgroundColor = 'green';
-			        bar2.style.backgroundColor = 'green';
+					bar1.style.backgroundColor = 'purple';
+			        bar2.style.backgroundColor = 'purple';
 				}
         		this.setState({swapMessage: `Swapping ${bar1.innerText} with ${bar2.innerText}`})
-        		this.setState({messageColor: 'green'})
+        		this.setState({messageColor: 'purple'})
     
         	} else if(action === 'sorted') {
         		this.setState({swapMessage: 'Sorted!'})
         		this.setState({messageColor: 'green'})
+        		this.setState({buttonDisable: 'enabled'})
         		return;
         	}
 
-				setTimeout(() => {
-					//console.log(bar2)
-					if(bar1 && bar2) {
-					bar1.style.backgroundColor = '#357edd';
-			        bar2.style.backgroundColor = '#357edd';
-					}
-			        if(swap) {
-			        	const self = this
-			        	const newArray = self.state.array.slice()
-			        	var temp = newArray[b1HTML];
-			        	newArray[b1HTML] = newArray[b2HTML]
-			        	newArray[b2HTML] = temp   
-			        	//console.log('swap', newArray[b2HTML], newArray[b1HTML], 'b1HTML', b1HTML)
-			        	self.setState({array: newArray})
-			        }
-				}, this.state.speed)
-        this.bubbleSort(array, ++index, b1HTML, b2HTML);  
+			setTimeout(() => {
+				if(bar1 && bar2) {
+				bar1.style.backgroundColor = '#357edd';
+		        bar2.style.backgroundColor = '#357edd';
+				}
+		        if(swap) {
+		        	const self = this
+		        	const newArray = self.state.array.slice()
+		        	var temp = newArray[b1HTML];
+		        	newArray[b1HTML] = newArray[b2HTML]
+		        	newArray[b2HTML] = temp   
+		        	self.setState({array: newArray})
+		        }
+			}, this.state.speed)
+
+        	this.bubbleSort(array, ++index, b1HTML, b2HTML);  
 		}, this.state.speed);
 
 	}
@@ -111,8 +173,6 @@ class ArrayVisual extends React.Component {
 	    this.setState({array: Array.from(Array(ARRAY_LENGTH)).map(x=>Math.floor(Math.random() * (max-min) + min))})
   	}
 
-
-	
 	marks = [
 	  {
 	    value: 100,
@@ -147,13 +207,13 @@ class ArrayVisual extends React.Component {
 	  return this.marks.findIndex((mark) => mark.value === value) + 1;
 	}
 
-
 	handleAlgorithmChange = (event) => {
 	  this.setState({algorithm: event.target.value})
 	  return event.target.value
 	};
 
 	onStop = () => {
+		this.setState({buttonDisable: 'enabled'})
 		this.setState({stop: true})
 		this.setState({swapMessage: 'Stopped'})
 		this.setState({messageColor: 'red'})
@@ -165,6 +225,7 @@ class ArrayVisual extends React.Component {
   				<div>
 	  				<div className="barcontainer">
 	  					<div className='barcontainerheader'></div>
+
 		  				{this.state.array.map((arr, idx) => 
 						<div className='bar' style={{height: arr+10 +'%'}}  key= {idx}>
 		  					<div className='barlabel'>
@@ -172,36 +233,41 @@ class ArrayVisual extends React.Component {
 						    </div>
 		  				</div>
 		  				)}
-
-
 		  			</div>
 
 		  			<Container maxWidth="md">
 			  			<p>Steps: <span style={{color: this.state.messageColor}}>{this.state.swapMessage}</span></p>
 
-
 		  				<Button onClick={() => this.onGenerateArray()} variant="contained" color="primary" style={{float: 'left', marginRight: '10px', textTransform: 'none'}}>
   							Randomize
 						</Button>
 		  
-			  			<Button onClick={() => this.sortStart()} variant="contained" color="primary" style={{float: 'left', marginRight: '10px', textTransform: 'none'}}>
+		  				
+						{this.state.buttonDisable === 'enabled' 
+						? 
+						(<Button onClick={() => this.sortStart()} variant="contained" color="primary" style={{float: 'left', marginRight: '10px', textTransform: 'none'}}>
   							Sort
-						</Button>
+						</Button>) 
+						: 
+						(<Button onClick={() => this.sortStart()} variant="contained" disabled color="primary" style={{float: 'left', marginRight: '10px', textTransform: 'none'}}>
+  							Sort
+						</Button>)
+						}
 
 						<Button color="secondary" onClick={() => this.onStop()} style={{float: 'left'}}>Stop</Button>
 
 			  			<FormControl style={{float: 'right', bottom: '13px'}}>
-						       <InputLabel id="demo-simple-select-label"></InputLabel>
-						       <Select
-						         labelId="demo-simple-select-label"
-						         id="demo-simple-select"
-						         value={this.state.algorithm}
-						         onChange={this.handleAlgorithmChange}
-						       >
-						         <MenuItem value={'bubble'}>Bubble Sort</MenuItem>
-						         <MenuItem value={'insertion'}>Insertion Sort</MenuItem>
-						         <MenuItem value={'selection'}>Selection Sort</MenuItem>
-						       </Select>
+					       <InputLabel id="demo-simple-select-label"></InputLabel>
+					       <Select
+					         labelId="demo-simple-select-label"
+					         id="demo-simple-select"
+					         value={this.state.algorithm}
+					         onChange={this.handleAlgorithmChange}>
+
+					         <MenuItem value={'bubble'}>Bubble Sort</MenuItem>
+					         <MenuItem value={'insertion'}>Insertion Sort</MenuItem>
+					         <MenuItem value={'selection'}>Selection Sort</MenuItem>
+					       </Select>
 						</FormControl>
 			  			
 		  				<Typography id="discrete-slider-restrict" style={{marginTop: '100px'}}>
@@ -219,12 +285,11 @@ class ArrayVisual extends React.Component {
 							step={null}
 							marks={this.marks}
 						/>
-					</Container>
-  				
+					</Container>			
   				</div>
-
   			);
 		}
+
 		return(
 			<div id="outPopUp">
 			  	<h1>Click Randomize to get some numbers!</h1>
