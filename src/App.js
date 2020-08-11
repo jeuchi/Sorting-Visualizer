@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
 
-import Navigation from './components/Navigation/Navigation';
 import ArrayVisual from './components/ArrayVisual/ArrayVisual';
 
 class App extends Component {
@@ -37,7 +35,6 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        {/*<Navigation onGenerateArray = {this.onGenerateArray} onBubbleChange={this.onBubbleChange} onSort={this.onSort}/>*/}
         <ArrayVisual array={this.state.array} sort={this.state.sort} onSort={this.onSort}/>
       </div>
     );

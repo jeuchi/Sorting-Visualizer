@@ -2,18 +2,14 @@ import React from 'react';
 import './ArrayVisual.css';
 import {bubbleSortAnimated} from '../BubbleSort/BubbleSort';
 import Slider from '@material-ui/core/Slider';
-import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
-import ButtonGroup from '@material-ui/core/ButtonGroup';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
-import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import Container from '@material-ui/core/Container';
 
-const ANIMATION_SPEED = 300; //in ms
 
 class ArrayVisual extends React.Component {
 	constructor(props) {
@@ -42,12 +38,11 @@ class ArrayVisual extends React.Component {
 
 	bubbleSort(array, index, b1HTML, b2HTML) {
 		setTimeout(() => {
-		const [animations,sortArray] = bubbleSortAnimated(array);
+		const [animations] = bubbleSortAnimated(array);
 		var frameEnd = animations.length;
 		if(index === frameEnd) {
 			return
 		}
-		var max = 6;
 		var swap = false;
 		
         	var action = animations[index][0];
@@ -142,7 +137,7 @@ class ArrayVisual extends React.Component {
 	];
 
 	valuetext = (value) => {
-		if(this.state.speed != value) {
+		if(this.state.speed !== value) {
 			this.setState({speed: value})
 		}
 	 	return({value})
