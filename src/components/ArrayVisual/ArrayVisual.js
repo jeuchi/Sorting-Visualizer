@@ -4,6 +4,13 @@ import {bubbleSortAnimated} from '../BubbleSort/BubbleSort';
 import Slider from '@material-ui/core/Slider';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
+import ButtonGroup from '@material-ui/core/ButtonGroup';
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+import FormHelperText from '@material-ui/core/FormHelperText';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
 
 const ANIMATION_SPEED = 300; //in ms
 
@@ -14,15 +21,22 @@ class ArrayVisual extends React.Component {
 		this.state = {
 			array: [],
 			sorted: false,
-			speed: 1000,
+			swapMessage: '',
+			messageColor: 'green',
+			speed: 600,
 			stop: false,
+			algorithm: 'bubble',
 		}
 	}
 
-	bubbleSortStart = () => {
-		console.log('g')
+	sortStart = () => {
 		this.setState({stop: false})
-		this.bubbleSort(this.state.array,0, 0, 0)
+
+		if(this.state.algorithm === 'bubble') {
+			this.bubbleSort(this.state.array,0, 0, 0)
+		} else {
+			console.log('not yet')
+		}
 	}
 
 	bubbleSort(array, index, b1HTML, b2HTML) {
@@ -45,8 +59,9 @@ class ArrayVisual extends React.Component {
         	}
 
         	if(action === 'compare') {
-        		//console.log('compare', bar1, bar2)
         		if(bar1 && bar2) {
+        		this.setState({swapMessage: `Comparing ${bar1.innerText} and ${bar2.innerText}`})
+        		this.setState({messageColor: 'red'})
 
 	        	bar1.style.backgroundColor = 'red';
 	        	bar2.style.backgroundColor = 'red';
@@ -57,6 +72,12 @@ class ArrayVisual extends React.Component {
 
         	}else if(action === 'swap'){
         		swap = true;
+        		if(bar1 && bar2) {
+					bar1.style.backgroundColor = 'green';
+			        bar2.style.backgroundColor = 'green';
+				}
+        		this.setState({swapMessage: `Swapping ${bar1.innerText} with ${bar2.innerText}`})
+        		this.setState({messageColor: 'green'})
     
         	} else if(action === 'sorted') {
         		console.log('sorted')
@@ -86,6 +107,7 @@ class ArrayVisual extends React.Component {
 
 	onGenerateArray = () => {
 		this.setState({stop: true})
+		this.setState({swapMessage: ''})
 	    const ARRAY_LENGTH = 6;
 	    const min = 1;
 	    const max = 80;
@@ -129,6 +151,16 @@ class ArrayVisual extends React.Component {
 	}
 
 
+	handleAlgorithmChange = (event) => {
+	  this.setState({algorithm: event.target.value})
+	  return event.target.value
+	};
+
+	onStop = () => {
+		this.setState({stop: true})
+		this.setState({swapMessage: 'Stopped'})
+  	}
+
 	render() {
 		if(this.state.array.length) {
   			return ( 
@@ -143,20 +175,41 @@ class ArrayVisual extends React.Component {
 		  				</div>
 		  				)}
 
-		  				<button onClick={() => this.onGenerateArray()} className='f6 link dim ph3 pv2 mb2 dib white bg-blue center'>Generate!</button>
+		  				<Button onClick={() => this.onGenerateArray()} variant="contained" color="primary" style={{margin: '10px', textTransform: 'none'}}>
+  							Randomize
+						</Button>
 		  
-			  			<button 
-			  			onClick={() => this.bubbleSortStart()}
-			  			className='f6 link dim ph3 pv2 mb2 dib white bg-blue center'>Sort!
-			  			</button>
+			  			<Button onClick={() => this.sortStart()} variant="contained" color="primary" style={{margin: '10px', textTransform: 'none'}}>
+  							Sort
+						</Button>
+
+						<FormControl style={{marginLeft: '10px'}}>
+					       <InputLabel id="demo-simple-select-label"></InputLabel>
+					       <Select
+					         labelId="demo-simple-select-label"
+					         id="demo-simple-select"
+					         value={this.state.algorithm}
+					         onChange={this.handleAlgorithmChange}
+					       >
+					         <MenuItem value={'bubble'}>Bubble Sort</MenuItem>
+					         <MenuItem value={'insertion'}>Insertion Sort</MenuItem>
+					         <MenuItem value={'selection'}>Selection Sort</MenuItem>
+					       </Select>
+					     </FormControl>
+
+						<Button color="secondary" onClick={() => this.onStop()}>Stop</Button>
+						
+
+
 		  			</div>
+		  			<p>Steps: <span style={{color: this.state.messageColor}}>{this.state.swapMessage}</span></p>
 		  			
 	  				<Typography id="discrete-slider-restrict" style={{marginTop: '100px'}}>
 						  Change Speed
 					</Typography>
 					<Slider
 					 	style={{width: '50%', marginTop: '50px'}}
-						defaultValue={1000}
+						defaultValue={600}
 						valueLabelFormat={this.valueLabelFormat}
 						getAriaValueText={this.valuetext}
 						aria-labelledby="discrete-slider-restrict"					
@@ -173,8 +226,10 @@ class ArrayVisual extends React.Component {
 		}
 		return(
 			<div>
-		  	<h1>Click Generate to get started!</h1>
-		  	<button onClick={() => this.onGenerateArray()} className='f6 link dim ph3 pv2 mb2 dib white bg-blue center'>Generate!</button>
+		  	<h1>Click Randomize to get some numbers!</h1>
+		  	<Button onClick={() => this.onGenerateArray()} variant="contained" color="primary" style={{textTransform: 'none'}}>
+  				Randomize
+			</Button>
 			</div>
 		)
 	}
