@@ -1,26 +1,26 @@
 {
   "files": {
-    "main.css": "/jeuchi/sorting-visualizer/static/css/main.fcc7a37a.chunk.css",
-    "main.js": "/jeuchi/sorting-visualizer/static/js/main.bb4a88be.chunk.js",
-    "main.js.map": "/jeuchi/sorting-visualizer/static/js/main.bb4a88be.chunk.js.map",
-    "runtime-main.js": "/jeuchi/sorting-visualizer/static/js/runtime-main.f8cc5598.js",
-    "runtime-main.js.map": "/jeuchi/sorting-visualizer/static/js/runtime-main.f8cc5598.js.map",
-    "static/css/2.3c03f26f.chunk.css": "/jeuchi/sorting-visualizer/static/css/2.3c03f26f.chunk.css",
-    "static/js/2.76f81fa1.chunk.js": "/jeuchi/sorting-visualizer/static/js/2.76f81fa1.chunk.js",
-    "static/js/2.76f81fa1.chunk.js.map": "/jeuchi/sorting-visualizer/static/js/2.76f81fa1.chunk.js.map",
-    "index.html": "/jeuchi/sorting-visualizer/index.html",
-    "precache-manifest.f9a8db0335b67992f243183d98773aea.js": "/jeuchi/sorting-visualizer/precache-manifest.f9a8db0335b67992f243183d98773aea.js",
-    "service-worker.js": "/jeuchi/sorting-visualizer/service-worker.js",
-    "static/css/2.3c03f26f.chunk.css.map": "/jeuchi/sorting-visualizer/static/css/2.3c03f26f.chunk.css.map",
-    "static/css/main.fcc7a37a.chunk.css.map": "/jeuchi/sorting-visualizer/static/css/main.fcc7a37a.chunk.css.map",
-    "static/js/2.76f81fa1.chunk.js.LICENSE.txt": "/jeuchi/sorting-visualizer/static/js/2.76f81fa1.chunk.js.LICENSE.txt",
-    "static/media/logo.svg": "/jeuchi/sorting-visualizer/static/media/logo.5d5d9eef.svg"
+    "main.css": "/sorting-visualizer/static/css/main.fcc7a37a.chunk.css",
+    "main.js": "/sorting-visualizer/static/js/main.16474b8a.chunk.js",
+    "main.js.map": "/sorting-visualizer/static/js/main.16474b8a.chunk.js.map",
+    "runtime-main.js": "/sorting-visualizer/static/js/runtime-main.648a2344.js",
+    "runtime-main.js.map": "/sorting-visualizer/static/js/runtime-main.648a2344.js.map",
+    "static/css/2.3c03f26f.chunk.css": "/sorting-visualizer/static/css/2.3c03f26f.chunk.css",
+    "static/js/2.76f81fa1.chunk.js": "/sorting-visualizer/static/js/2.76f81fa1.chunk.js",
+    "static/js/2.76f81fa1.chunk.js.map": "/sorting-visualizer/static/js/2.76f81fa1.chunk.js.map",
+    "index.html": "/sorting-visualizer/index.html",
+    "precache-manifest.3c44e9a65c2a2db8d2ed8c116501fdb6.js": "/sorting-visualizer/precache-manifest.3c44e9a65c2a2db8d2ed8c116501fdb6.js",
+    "service-worker.js": "/sorting-visualizer/service-worker.js",
+    "static/css/2.3c03f26f.chunk.css.map": "/sorting-visualizer/static/css/2.3c03f26f.chunk.css.map",
+    "static/css/main.fcc7a37a.chunk.css.map": "/sorting-visualizer/static/css/main.fcc7a37a.chunk.css.map",
+    "static/js/2.76f81fa1.chunk.js.LICENSE.txt": "/sorting-visualizer/static/js/2.76f81fa1.chunk.js.LICENSE.txt",
+    "static/media/logo.svg": "/sorting-visualizer/static/media/logo.5d5d9eef.svg"
   },
   "entrypoints": [
-    "static/js/runtime-main.f8cc5598.js",
+    "static/js/runtime-main.648a2344.js",
     "static/css/2.3c03f26f.chunk.css",
     "static/js/2.76f81fa1.chunk.js",
     "static/css/main.fcc7a37a.chunk.css",
-    "static/js/main.bb4a88be.chunk.js"
+    "static/js/main.16474b8a.chunk.js"
   ]
 }
