@@ -11,6 +11,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
+import Container from '@material-ui/core/Container';
 
 const ANIMATION_SPEED = 300; //in ms
 
@@ -80,7 +81,8 @@ class ArrayVisual extends React.Component {
         		this.setState({messageColor: 'green'})
     
         	} else if(action === 'sorted') {
-        		console.log('sorted')
+        		this.setState({swapMessage: 'Sorted!'})
+        		this.setState({messageColor: 'green'})
         		return;
         	}
 
@@ -159,6 +161,7 @@ class ArrayVisual extends React.Component {
 	onStop = () => {
 		this.setState({stop: true})
 		this.setState({swapMessage: 'Stopped'})
+		this.setState({messageColor: 'red'})
   	}
 
 	render() {
@@ -175,61 +178,64 @@ class ArrayVisual extends React.Component {
 		  				</div>
 		  				)}
 
-		  				<Button onClick={() => this.onGenerateArray()} variant="contained" color="primary" style={{margin: '10px', textTransform: 'none'}}>
+
+		  			</div>
+
+		  			<Container maxWidth="md">
+			  			<p>Steps: <span style={{color: this.state.messageColor}}>{this.state.swapMessage}</span></p>
+
+
+		  				<Button onClick={() => this.onGenerateArray()} variant="contained" color="primary" style={{float: 'left', marginRight: '10px', textTransform: 'none'}}>
   							Randomize
 						</Button>
 		  
-			  			<Button onClick={() => this.sortStart()} variant="contained" color="primary" style={{margin: '10px', textTransform: 'none'}}>
+			  			<Button onClick={() => this.sortStart()} variant="contained" color="primary" style={{float: 'left', marginRight: '10px', textTransform: 'none'}}>
   							Sort
 						</Button>
 
-						<FormControl style={{marginLeft: '10px'}}>
-					       <InputLabel id="demo-simple-select-label"></InputLabel>
-					       <Select
-					         labelId="demo-simple-select-label"
-					         id="demo-simple-select"
-					         value={this.state.algorithm}
-					         onChange={this.handleAlgorithmChange}
-					       >
-					         <MenuItem value={'bubble'}>Bubble Sort</MenuItem>
-					         <MenuItem value={'insertion'}>Insertion Sort</MenuItem>
-					         <MenuItem value={'selection'}>Selection Sort</MenuItem>
-					       </Select>
-					     </FormControl>
+						<Button color="secondary" onClick={() => this.onStop()} style={{float: 'left'}}>Stop</Button>
 
-						<Button color="secondary" onClick={() => this.onStop()}>Stop</Button>
-						
-
-
-		  			</div>
-		  			<p>Steps: <span style={{color: this.state.messageColor}}>{this.state.swapMessage}</span></p>
-		  			
-	  				<Typography id="discrete-slider-restrict" style={{marginTop: '100px'}}>
-						  Change Speed
-					</Typography>
-					<Slider
-					 	style={{width: '50%', marginTop: '50px'}}
-						defaultValue={600}
-						valueLabelFormat={this.valueLabelFormat}
-						getAriaValueText={this.valuetext}
-						aria-labelledby="discrete-slider-restrict"					
-						valueLabelDisplay="off"
-						min={100}
-						max={2100}  
-						step={null}
-						marks={this.marks}
-					/>
+			  			<FormControl style={{float: 'right', bottom: '13px'}}>
+						       <InputLabel id="demo-simple-select-label"></InputLabel>
+						       <Select
+						         labelId="demo-simple-select-label"
+						         id="demo-simple-select"
+						         value={this.state.algorithm}
+						         onChange={this.handleAlgorithmChange}
+						       >
+						         <MenuItem value={'bubble'}>Bubble Sort</MenuItem>
+						         <MenuItem value={'insertion'}>Insertion Sort</MenuItem>
+						         <MenuItem value={'selection'}>Selection Sort</MenuItem>
+						       </Select>
+						</FormControl>
+			  			
+		  				<Typography id="discrete-slider-restrict" style={{marginTop: '100px'}}>
+							  Change Speed
+						</Typography>
+						<Slider
+						 	style={{width: '90%', marginTop: '50px'}}
+							defaultValue={600}
+							valueLabelFormat={this.valueLabelFormat}
+							getAriaValueText={this.valuetext}
+							aria-labelledby="discrete-slider-restrict"					
+							valueLabelDisplay="off"
+							min={100}
+							max={2100}  
+							step={null}
+							marks={this.marks}
+						/>
+					</Container>
   				
   				</div>
 
   			);
 		}
 		return(
-			<div>
-		  	<h1>Click Randomize to get some numbers!</h1>
-		  	<Button onClick={() => this.onGenerateArray()} variant="contained" color="primary" style={{textTransform: 'none'}}>
-  				Randomize
-			</Button>
+			<div id="outPopUp">
+			  	<h1>Click Randomize to get some numbers!</h1>
+			  	<Button onClick={() => this.onGenerateArray()} variant="contained" color="primary" style={{textTransform: 'none'}}>
+	  				Randomize
+				</Button>
 			</div>
 		)
 	}
