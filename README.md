@@ -1,7 +1,7 @@
 
 ## Author ✏️
 
--    **Jeremy Euchi**  -  [https://github.com/jeuchi](https://github.com/jeuchi)
+-    [**Jeremy Euchi**](https://github.com/jeuchi)
 
 ## Features 🎤
 
