@@ -23,7 +23,7 @@ class ArrayVisual extends React.Component {
 			sorted: false,
 			stepsMessage: '',
 			messageColor: 'green',
-			speed: 1100,
+			speed: [],
 			stop: false,
 			algorithm: 'bubble',
 			buttonDisable: 'enabled'
@@ -123,10 +123,10 @@ class ArrayVisual extends React.Component {
 			        	
 			        self.setState({array: newArray})
 			    }
-			}, this.state.speed)
+			}, this.state.speed[1])
 
 	        this.selectionSort(array,++index,targetHTML,b1HTML,b2HTML)
-		}, this.state.speed);
+		}, this.state.speed[1]);
 
 	}
 
@@ -182,10 +182,10 @@ class ArrayVisual extends React.Component {
 			        	
 			        self.setState({array: newArray})
 			    }
-			}, this.state.speed)
+			}, this.state.speed[1])
 
 	        this.insertionSort(array,++index,b1HTML,b2HTML)
-		}, this.state.speed);
+		}, this.state.speed[1]);
 
 	}
 
@@ -245,10 +245,10 @@ class ArrayVisual extends React.Component {
 		        	newArray[b2HTML] = temp   
 		        	self.setState({array: newArray})
 		        }
-			}, this.state.speed)
+			}, this.state.speed[1])
 
         	this.bubbleSort(array, ++index, b1HTML, b2HTML);  
-		}, this.state.speed);
+		}, this.state.speed[1]);
 
 	}
 
@@ -268,17 +268,16 @@ class ArrayVisual extends React.Component {
 	    const min = 1;
 	    const max = 80;
 	    this.setState({array: Array.from(Array(ARRAY_LENGTH)).map(x=>Math.floor(Math.random() * (max-min) + min))})
-	    //this.setState({array: [6,31,52,18,55,27]})
   	}
 
 	marks = [
 	  {
 	    value: 100,
-	    label: 'Fastest',
+	    label: 'Slowest',
 	  },
 	  {
 	    value: 600,
-	    label: 'Faster',
+	    label: 'Slower',
 	  },
 	  {
 	    value: 1100,
@@ -286,17 +285,23 @@ class ArrayVisual extends React.Component {
 	  },
 	  {
 	    value: 1700,
-	    label: 'Slower',
+	    label: 'Faster',
 	  },
 	  {
 	    value: 2100,
-	    label: 'Slowest',
+	    label: 'Fastest',
 	  },
 	];
 
 	valuetext = (value) => {
-		if(this.state.speed !== value) {
-			this.setState({speed: value})
+		if(this.state.speed[0] !== value) {
+			switch(value) {
+				case 100: this.setState({speed: [value, 2100]}); break;
+				case 600: this.setState({speed: [value, 1700]}); break;
+				case 1100: this.setState({speed: [value, 1100]}); break;
+				case 1700: this.setState({speed: [value, 600]}); break;
+				case 2100: this.setState({speed: [value, 100]}); break;
+			}
 		}
 	 	return({value})
 	}
@@ -330,13 +335,14 @@ class ArrayVisual extends React.Component {
 
 
 	render() {
-		if(this.state.array.length) {
+		const { array, messageColor, stepsMessage, buttonDisable, algorithm } = this.state
+		if(array.length) {
   			return ( 
   				<div>
 	  				<div className="barcontainer">
 	  					<div className='barcontainerheader'></div>
 
-		  				{this.state.array.map((arr, idx) => 
+		  				{array.map((arr, idx) => 
 						<div className='bar' style={{height: arr+10 +'%'}}  key= {idx}>
 		  					<div className='barlabel'>
 						      {arr}
@@ -346,14 +352,14 @@ class ArrayVisual extends React.Component {
 		  			</div>
 
 		  			<Container maxWidth="md">
-			  			<p>Steps: <span style={{color: this.state.messageColor}}>{this.state.stepsMessage}</span></p>
+			  			<p>Steps: <span style={{color: messageColor}}>{stepsMessage}</span></p>
 
 		  				<Button onClick={() => this.onGenerateArray()} variant="contained" color="primary" style={{float: 'left', marginRight: '10px', textTransform: 'none'}}>
   							Randomize
 						</Button>
 		  
 		  				
-						{this.state.buttonDisable === 'enabled' 
+						{buttonDisable === 'enabled' 
 						? 
 						(<Button onClick={() => this.sortStart()} variant="contained" color="primary" style={{float: 'left', marginRight: '10px', textTransform: 'none'}}>
   							Sort
@@ -367,14 +373,14 @@ class ArrayVisual extends React.Component {
 						<Button color="secondary" onClick={() => this.onStop()} style={{float: 'left'}}>Stop</Button>
 						<Button color="secondary" onClick={() => this.onReset()} style={{float: 'left'}}>Reset</Button>
 
-						{this.state.buttonDisable === 'enabled'
+						{buttonDisable === 'enabled'
 						?
 			  			(<FormControl style={{float: 'right', bottom: '13px'}}>
 					       <InputLabel id="demo-simple-select-label"></InputLabel>
 					       <Select
 					         labelId="demo-simple-select-label"
 					         id="demo-simple-select"
-					         value={this.state.algorithm}
+					         value={algorithm}
 					         onChange={this.handleAlgorithmChange}>
 
 					         <MenuItem value={'bubble'}>Bubble Sort</MenuItem>
@@ -388,7 +394,7 @@ class ArrayVisual extends React.Component {
 					       <Select
 					         labelId="demo-simple-select-label"
 					         id="demo-simple-select"
-					         value={this.state.algorithm}
+					         value={algorithm}
 					         onChange={this.handleAlgorithmChange}>
 
 					         <MenuItem value={'bubble'}>Bubble Sort</MenuItem>
