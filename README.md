@@ -11,7 +11,7 @@
 ✅ Change speed of the animations on the fly
 
 
-To view a live example, **[click here](https://jeuchi.github.io/sorting-visualizer/)**
+To view a live example, **[click here](https://jeuchi.github.io/Sorting-Visualizer/)**
 
 ## Technologies used  🧰
 
