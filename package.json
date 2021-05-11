@@ -1,8 +1,8 @@
 {
   "name": "sorting-visualizer",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "private": true,
-  "homepage": "https://jeuchi.github.io/sorting-visualizer",
+  "homepage": "https://jeuchi.github.io/Sorting-Visualizer",
   "dependencies": {
     "@material-ui/core": "^4.11.0",
     "@testing-library/jest-dom": "^4.2.4",
